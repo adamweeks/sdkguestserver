@@ -1,0 +1,21 @@
+{
+  "name": "sdkguestserver",
+  "version": "1.0.0",
+  "description": "SDK Guest Server Workshop",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Weeks <adweeks@cisco.com>",
+  "license": "ISC",
+  "dependencies": {
+    "browserify-middleware": "8.1.1",
+    "ciscospark": "1.32.23",
+    "dotenv": "^6.2.0",
+    "ejs": "2.6.1",
+    "express": "4.16.4",
+    "jsonwebtoken": "8.4.0",
+    "uuid": "3.3.2"
+  }
+}

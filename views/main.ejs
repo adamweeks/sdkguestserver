@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/@collab-ui/core@11.0.1/css/collab-ui.min.css">
+</head>
+<body style="background-color: lightgray;">
+  <header class="cui-top-bar cui-top-bar--dark" role="navigation">
+    <div class="cui-top-bar__container row">
+      <div class="cui-top-bar__brand">
+        <a class="cui-brand" href="/">
+          <div class="cui-brand__logo">
+            
+            <i class="icon icon-cisco-logo"></i>
+          </div>
+          <div class="cui-brand__title">Webex JS SDK Workshop</div>
+        </a>
+      </div>
+      <nav class="cui-top-bar__nav ">
+        
+      </nav>
+      <div class="cui-top-bar__right ">
+        
+      </div>
+    </div>
+  </header>
+  <main style="height: 100%; background-color: lightgray;">
+    <style>
+      .dialog {
+        width: 75%;
+        height: 50%;
+        background-color: #f5f5f5;
+        margin: 50px auto;
+        padding: 25px;
+        border: 3px solid black;
+        box-shadow: 10px 10px gray;
+      }
+    </style>
+
+    <div class="dialog">
+    <!-- Content Here -->
+    <% if (locals.title) { %>
+      <h1><%= locals.title %></h1>
+    <% } %>
+    <% if (locals.stage === 1) { %>
+      <%- include form %>
+    <% } %>
+    <% if (locals.stage === 0) { %>
+      <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
+    <% } %>
+    <!-- End Content -->
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,2 @@
+window.whatever = [];
+require('ciscospark');

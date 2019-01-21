@@ -1,0 +1,19 @@
+<!-- This code embeds the webex teams space widget onto the page -->
+<!-- It requires a `token` value passed from the main -->
+<div id="my-webexteams-widget" style="width: 500px; height: 500px;"/>
+<script>
+  var widgetEl = document.getElementById('my-webexteams-widget');
+  // Init a new widget
+  ciscospark.widget(widgetEl).spaceWidget({
+    guestToken: "<%=locals.token%>",
+    destinationId: 'roomkit@sparkdemos.com',
+    destinationType: 'email',
+    activities: {
+      "files":false,
+      "meet":true,
+      "message":false,
+      "people":false
+      },
+    initialActivity: "meet",
+  });
+</script>
