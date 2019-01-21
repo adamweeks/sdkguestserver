@@ -65,12 +65,20 @@ In this step, We will use an input form and generate a guest token from it.
 
 Now that we are creating a guest token, let's use the widgets to place our first call!
 
-* Create widget js from developer portal samples
-  * Add hint: `guestToken`
-* User generated JWT with widget to call `roomkit@sparkdemos.com`
-* Edit the widget page to a new destination
-* Edit the widget page to include messaging
-* Run app and verify widget opens
+* Open the `widget.js` file
+* Find the code block that starts with: `ciscospark.widget(widgetEl).spaceWidget({`
+* Add the following property:
+
+  ```js
+  destinationId: 'roomkit@sparkdemos.com',
+  ```
+
+* Browse to page `/stage3` and verify widget opens.
+* Try changing widget configurations
+  * [View other widget configuration options here](https://github.com/webex/react-ciscospark/blob/master/packages/node_modules/@ciscospark/widget-space/README.md#configuration)
+  * Edit the widget page to a new destination (your webex teams account?)
+  * Edit the widget page to include messaging
+  * Edit the widget to default the `initialActivity` to "message"
 
 ### App Work Stage 4 (removing the widget and using SDK to auth)
 

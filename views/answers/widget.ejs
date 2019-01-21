@@ -6,6 +6,8 @@
   // Init a new widget
   ciscospark.widget(widgetEl).spaceWidget({
     guestToken: "<%=locals.token%>",
+    // NOTE: destinationId is purposefully missing here
+    destinationId: 'roomkit@sparkdemos.com',
     destinationType: 'email',
     spaceActivities: {
       "files":false,

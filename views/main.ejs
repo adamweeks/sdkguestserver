@@ -3,6 +3,10 @@
 
 <head>
   <link rel="stylesheet" href="https://unpkg.com/@collab-ui/core@11.0.1/css/collab-ui.min.css">
+  <% if (locals.showWidget) { %>
+    <link rel="stylesheet" href="https://code.s4d.io/widget-space/latest/main.css">
+    <script src="https://code.s4d.io/widget-space/latest/bundle.js"></script>
+  <% } %>
 </head>
 <body style="background-color: lightgray;">
   <header class="cui-top-bar cui-top-bar--dark" role="navigation">
@@ -28,7 +32,6 @@
     <style>
       .dialog {
         width: 75%;
-        height: 50%;
         background-color: #f5f5f5;
         margin: 50px auto;
         padding: 25px;
@@ -42,15 +45,14 @@
     <% if (locals.title) { %>
       <h1><%= locals.title %></h1>
     <% } %>
-    <% if (locals.stage === 1 && locals.token) { %>
-      <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
+    <% if (locals.showForm) { %>
+      <%- include form %>
     <% } %>
-    <% if (locals.stage === 2) { %>
-      <% if (locals.showForm) { %>
-        <%- include form %>
-      <% } else { %>
-        <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
-      <% } %>
+    <% if (locals.showWidget) { %>
+      <%- include widget %>
+    <% } %>
+    <% if (locals.displayToken && locals.token) { %>
+      <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
     <% } %>
     <!-- End Content -->
     </div>

@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.get('/guest', (req, res) => {
   const displayName = 'SDK Workshop';
   createUser({ displayName }).then((token) => {
-    res.render('main', {token, stage: 1, title: 'Guest Token'});
+    res.render('main', {token, displayToken: true, stage: 1, title: 'Guest Token'});
   });
 });
 
@@ -45,6 +45,7 @@ app.get('/stage2', (req, res) => {
   // Create JWT based on form name entered
   createUser({ displayName }).then((token) => {
     res.render('main', {
+      displayToken: true,
       showForm: false,
       stage: 2,
       token,
@@ -53,19 +54,27 @@ app.get('/stage2', (req, res) => {
 })
 
 app.get('/stage3', (req, res) => {
+  // Get the display name from the querystring of the url "?displayName=Name"
   const displayName = req.query.displayName;
-  if (!displayName) {
-    return res.status(401).send('display name required');
-  }
-  createUser({ displayName }).then((token) => {
-    res.render('main', {token, stage: 3, title: 'Username Entry'});
-  });
-});
 
-app.get('/stage31', (req, res) => {
-  const displayName = req.query.displayName || 'SDK Workshop';
+  // Show the form if we do not have a name
+  if (!displayName) {
+    return res.render('main', {
+      showWidget: false,
+      showForm: true,
+      stage: 3,
+      title: 'Guest Token Entry'
+    });
+  }
+
+  // Create JWT based on form name entered
   createUser({ displayName }).then((token) => {
-    res.render('stage3', {token});
+    res.render('main', {
+      showWidget: true,
+      showForm: false,
+      stage: 3,
+      token,
+      title: `Welcome ${displayName}`});
   });
 });
 
