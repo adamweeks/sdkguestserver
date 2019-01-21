@@ -1,8 +1,18 @@
 # Building Server and Client-side Applications in Javascript with the Webex Teams SDK
 
-In this workshop, we are going to be building an application that will allow a visitor to our site to call our support desk. 
+In this workshop, we are going to be building an application that will allow a visitor to our site to call our support desk.
 
 We will be utilizing the Webex Teams SDK and the Webex Teams Widgets to build our experience.
+
+## Project Layout
+
+This is a basic express server project.
+
+* `index.js` handles the main routing of the server
+* `guest.js` has helper functions for generating JWTs
+* `views` folder has the front end code
+  * `main.ejs` basic page layout
+  * `form.ejs` person name entry form
 
 ## Workshop
 
@@ -23,6 +33,8 @@ We will be utilizing the Webex Teams SDK and the Webex Teams Widgets to build ou
 
 ### App Work Stage 1 (setup)
 
+First, let's make sure our environment is setup properly and able to create guest tokens.
+
 * Rename the `.env.default` file to `.env`
   * This makes the file hidden to everyone except you, making it safe for secret keys
 * Add guest user settings to `.env` file
@@ -35,17 +47,27 @@ We will be utilizing the Webex Teams SDK and the Webex Teams Widgets to build ou
     * Example: <https://sdkguestserver.adamweeks.repl.co/guest>
   * Copy generated token and paste it into <https://www.jwt.io>
 
-### App Work Stage 2 (widget to roomkit)
+### App Work Stage 2 (display name entry)
 
-* User name entry form
-* Generate JWT with user name
-* Verify JWT has entered user name via <https://www.jwt.io>
+Our app needs to know what to call the user.
+In this step, We will use an input form and generate a guest token from it.
+
+* Open `index.js`
+  * Find the "Stage 2" section:
+    ```js
+    app.get('/stage2', (req, res) => {
+    ```
+  * Stage 2 has two states: entry form and user display
+  * Test out the form and user entry on your site by browsing to `/stage2`
+  * Verify JWT has entered user name via <https://www.jwt.io>
+
+### App Work Stage 3 (widget to roomkit)
+
+Now that we are creating a guest token, let's use the widgets to place our first call!
+
 * Create widget js from developer portal samples
   * Add hint: `guestToken`
-* User generated JWT with widget to call roomkit@sparkdemos.com
-
-### App Work Stage 3 (chat/call widget to user)
-
+* User generated JWT with widget to call `roomkit@sparkdemos.com`
 * Edit the widget page to a new destination
 * Edit the widget page to include messaging
 * Run app and verify widget opens

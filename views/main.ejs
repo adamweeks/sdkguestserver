@@ -10,17 +10,17 @@
       <div class="cui-top-bar__brand">
         <a class="cui-brand" href="/">
           <div class="cui-brand__logo">
-            
+
             <i class="icon icon-cisco-logo"></i>
           </div>
           <div class="cui-brand__title">Webex JS SDK Workshop</div>
         </a>
       </div>
       <nav class="cui-top-bar__nav ">
-        
+
       </nav>
       <div class="cui-top-bar__right ">
-        
+
       </div>
     </div>
   </header>
@@ -42,11 +42,15 @@
     <% if (locals.title) { %>
       <h1><%= locals.title %></h1>
     <% } %>
-    <% if (locals.stage === 1) { %>
-      <%- include form %>
-    <% } %>
-    <% if (locals.stage === 0) { %>
+    <% if (locals.stage === 1 && locals.token) { %>
       <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
+    <% } %>
+    <% if (locals.stage === 2) { %>
+      <% if (locals.showForm) { %>
+        <%- include form %>
+      <% } else { %>
+        <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
+      <% } %>
     <% } %>
     <!-- End Content -->
     </div>
