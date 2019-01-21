@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://code.s4d.io/widget-space/latest/main.css">
     <script src="https://code.s4d.io/widget-space/latest/bundle.js"></script>
   <% } %>
+  <% if (locals.useSDK) { %>
+    <script src="https://js.samples.s4d.io/bundle.js"></script>
+  <% } %>
 </head>
 <body style="background-color: lightgray;">
   <header class="cui-top-bar cui-top-bar--dark" role="navigation">
@@ -50,6 +53,9 @@
     <% } %>
     <% if (locals.showWidget) { %>
       <%- include widget %>
+    <% } %>
+    <% if (locals.stage === 4) { %>
+      <%- include stage4 %>
     <% } %>
     <% if (locals.displayToken && locals.token) { %>
       <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>

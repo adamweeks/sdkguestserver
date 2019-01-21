@@ -82,9 +82,18 @@ Now that we are creating a guest token, let's use the widgets to place our first
 
 ### App Work Stage 4 (removing the widget and using SDK to auth)
 
-* Guest issuer SDK example <https://developer.webex.com/docs/sdks/browser>
-* Pass token generated to SDK
-* Authorize with token
+The widgets are great for giving the look and feel of the Webex Teams clients, but what if you want to embed calling within your application and give it a custom feel?
+
+We can do that with the SDK!
+
+Let's convert our front end code to use the SDK. The first thing we need to do is authorize our guest token with the SDK.
+
+Note: Guest issuer SDK example is available on the developer portal at: <https://developer.webex.com/docs/sdks/browser>
+
+* Open `stage4.ejs` file
+* Add a line of javascript to indicate that the user can authorize
+  * Hint: look for the `if (spark.canAuthorize) {` code
+  * Hint 2: Change the website text by setting this `document.getElementById('status').innerHTML`.
 
 ### App Work Stage 5 (Using SDK)
 
