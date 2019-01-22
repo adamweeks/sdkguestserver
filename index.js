@@ -6,8 +6,6 @@ const express = require('express');
 
 const createUser = require('./guest');
 
-const browserify = require('browserify-middleware');
-
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -142,14 +140,6 @@ app.get('/token', (req, res) => {
     });
   });
 });
-
-//provide a bundle exposing `require` for a few npm packages.
-app.get('/sdk.js', browserify('./sdk.js', {
-  cache: true,
-  precompile: true
-}));
-
-app.use(express.static('public'));
 
 app.listen(3000, () => {
   console.log('server started on port 3000');

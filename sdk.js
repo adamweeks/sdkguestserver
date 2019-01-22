@@ -1,2 +1,0 @@
-window.whatever = [];
-require('ciscospark');

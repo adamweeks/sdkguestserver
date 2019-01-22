@@ -10,7 +10,6 @@
   "author": "Adam Weeks <adweeks@cisco.com>",
   "license": "ISC",
   "dependencies": {
-    "browserify-middleware": "8.1.1",
     "ciscospark": "1.32.23",
     "dotenv": "^6.2.0",
     "ejs": "2.6.1",
