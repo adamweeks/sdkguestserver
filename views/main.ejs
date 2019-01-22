@@ -57,6 +57,9 @@
     <% if (locals.stage === 4) { %>
       <%- include stage4 %>
     <% } %>
+    <% if (locals.stage === 5 && locals.token) { %>
+      <%- include stage5 %>
+    <% } %>
     <% if (locals.displayToken && locals.token) { %>
       <h2 style="overflow-wrap: break-word;"><%= locals.token %></h2>
     <% } %>

@@ -38,7 +38,7 @@ app.get('/stage2', (req, res) => {
     return res.render('main', {
       showForm: true,
       stage: 2,
-      title: 'Guest Token Entry'
+      title: 'Stage 2: Using the widgets'
     });
   }
 
@@ -63,7 +63,7 @@ app.get('/stage3', (req, res) => {
       showWidget: false,
       showForm: true,
       stage: 3,
-      title: 'Guest Token Entry'
+      title: 'Stage 3: SDK Authentication'
     });
   }
 
@@ -87,7 +87,7 @@ app.get('/stage4', (req, res) => {
     return res.render('main', {
       showWidget: false,
       showForm: true,
-      stage: 3,
+      stage: 5,
       title: 'Guest Token Entry'
     });
   }
@@ -105,9 +105,28 @@ app.get('/stage4', (req, res) => {
 });
 
 app.get('/stage5', (req, res) => {
-  const displayName = req.query.displayName || 'SDK Workshop';
+  // Get the display name from the querystring of the url "?displayName=Name"
+  const displayName = req.query.displayName;
+
+  // Show the form if we do not have a name
+  if (!displayName) {
+    return res.render('main', {
+      showWidget: false,
+      showForm: true,
+      stage: 5,
+      title: 'Stage 5: SDK Calling'
+    });
+  }
+
+  // Create JWT based on form name entered
   createUser({ displayName }).then((token) => {
-    res.render('stage5', {token});
+    res.render('main', {
+      useSDK: true,
+      showWidget: false,
+      showForm: false,
+      stage: 5,
+      token,
+      title: `Welcome ${displayName}`});
   });
 });
 

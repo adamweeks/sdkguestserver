@@ -61,7 +61,7 @@ In this step, We will use an input form and generate a guest token from it.
   * Test out the form and user entry on your site by browsing to `/stage2`
   * Verify JWT has entered user name via <https://www.jwt.io>
 
-### App Work Stage 3 (widget to roomkit)
+### App Work Stage 3 (widget calling)
 
 Now that we are creating a guest token, let's use the widgets to place our first call!
 
@@ -80,7 +80,7 @@ Now that we are creating a guest token, let's use the widgets to place our first
   * Edit the widget page to include messaging
   * Edit the widget to default the `initialActivity` to "message"
 
-### App Work Stage 4 (removing the widget and using SDK to auth)
+### App Work Stage 4 (removing the widget and using SDK to login)
 
 The widgets are great for giving the look and feel of the Webex Teams clients, but what if you want to embed calling within your application and give it a custom feel?
 
@@ -88,14 +88,46 @@ We can do that with the SDK!
 
 Let's convert our front end code to use the SDK. The first thing we need to do is authorize our guest token with the SDK.
 
-Note: Guest issuer SDK example is available on the developer portal at: <https://developer.webex.com/docs/sdks/browser>
-
 * Open `stage4.ejs` file
+* Find the `spark.authorization.requestAccessTokenFromJwt` line of code
+  * This is where we login to Webex Teams with the guest token
+
+This stage does not give our user any information as to what is going on. Let's add a status message to display the status of our application:
+
 * Add a line of javascript to indicate that the user can authorize
-  * Hint: look for the `if (spark.canAuthorize) {` code
+  * Hint 1: look for the `if (spark.canAuthorize) {` code
   * Hint 2: Change the website text by setting this `document.getElementById('status').innerHTML`.
 
 ### App Work Stage 5 (Using SDK)
 
-* Show the SDK calling demo page
-* Use SDK calling demo instead of widgets
+Now that we have logged our guest user in with the SDK, let's take it a step further and do some calling with the SDK!
+
+The application has been populated with the code from the [Single Party Call Demo](https://github.com/webex/spark-js-sdk/tree/master/packages/node_modules/samples/browser-single-party-call/).
+
+At this stage, you have been given a fully working demo. Let's go through the code and find the important parts:
+
+* Find the following lines of code:
+  * `spark.authorization.requestAccessTokenFromJwt`
+    * This is the same code we used in stage4 to login with our guest token
+  * `function registerWithWebexTeamsCalling() {`
+    * Our browser needs to "register" with Webex Teams servers in order to place calls
+    * The end of this function will enable our calling button to place calls
+      * `callButton.disabled = false;`
+  * `const call = spark.phone.dial(destination);`
+    * This is what does the actual calling in the SDK
+    * The destination can be an email, SIP address, or room ID
+    * The `call` object is an event emitter, that means we will get javascript events for all the things that happen during the call.
+      * The `mediaStream` events let us know that video and audio have changed in the call
+  * Can you find where we `hangup` the call?
+
+#### Bonus Time
+
+Our SDK calling page could use a bit of styling. Here are some things to try:
+
+* Change the size of the "self view" to much smaller
+* Give the video windows a nicer border
+* Add a button to hide the "self view"
+
+## Notes & Links
+
+* SDK example is available on the developer portal at: <https://developer.webex.com/docs/sdks/browser>

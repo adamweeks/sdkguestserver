@@ -1,93 +1,76 @@
-<!DOCTYPE html>
-<html>
+<div id="status"></div>
 
-<head>
-  <title>Webex Guest Issuer (sample app)</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="styles.css">
 
-</head>
+<!-- Single Party Call HTML -->
+<form id="call-controls">
+  <fieldset>
+    <button class="cui-button cui-button--blue" id="call" title="call" type="button" disabled >Call</button>
+    <button class="cui-button cui-button--red" id="hangup" title="hangup" type="button" disabled>Hangup</button>
+  </fieldset>
+</form>
 
-<body>
-  <div id="content">
-    <h1>Webex Guest Issuer App example: Stage 5</h1>
-    <div id="status"></div>
-    
-    
-    <!-- Single Party Call HTML -->
-    <form id="call-controls">
-      <fieldset>
-        <legend>Call Controls</legend>
-        <button id="call" title="call" type="button" disabled >call</button>
-        <button id="hangup" title="hangup" type="button" disabled>cancel/hangup</button>
-      </fieldset>
-    </form>
-
-    <div style="display: flex">
-      <div id="self-video" style="width: 400px;">
-        <video style="width:100%; height: auto;" id="self-view" muted autoplay></video>
-      </div>
-      <div id="remote-video" style="width: 400px;">
-        <audio id="remote-view-audio" autoplay></audio>
-        <video id="remote-view-video" autoplay style="width:100%; height: auto;"></video>
-      </div>
-    </div>
-    <!-- Single Party Call HTML END -->
-
-  <!-- we are limited to repl.it resources, so load bundle externally -->
-  <script src="https://js.samples.s4d.io/bundle.js"></script>
+<div style="display: flex">
+  <div id="self-video" style="width: 400px;">
+    <video style="width:100%; height: auto;" id="self-view" muted autoplay></video>
+  </div>
+  <div id="remote-video" style="width: 400px;">
+    <audio id="remote-view-audio" autoplay></audio>
+    <video id="remote-view-video" autoplay style="width:100%; height: auto;"></video>
+  </div>
+</div>
 
 <script>
-  <!-- Single Party Call JS -->
-  // Inititate the SDK
-  const spark = ciscospark.init();
+  // Initialize the SDK
+  const spark = ciscospark.init({
+    config: {
+      phone: {
+        // Turn on group calling; there's a few minor breaking changes with
+        // regards to how single-party calling works (hence, the opt-in), but
+        // this is how things are going to work in 2.0 and if you plan on
+        // doing any group calls, you'll need this turned on for your entire
+        // app anyway.
+        enableExperimentalGroupCallingSupport: true
+      }
+    }
+  });
 
+  // Get our guest token from the server
   const jwt = '<%=locals.token%>';
+
+  // Add some shortcuts to html elements on the page
   const statusDiv = document.getElementById('status');
   const callButton = document.getElementById('call');
   const hangupButton = document.getElementById('hangup');
-  statusDiv.innerHTML = 'Loading';
-  
-  spark.once('ready', () => {
-    statusDiv.innerHTML = 'Authorizing';
-    spark.authorization.requestAccessTokenFromJwt({jwt}).then(() => {
-        if (spark.canAuthorize) {
-          // Authorization is successful
-          // Change Authentication status to `Authorized`
-          statusDiv.innerHTML = 'Authorized!';
-          
-          spark.phone.register()
-            .then(() => {
-              // Enable our call button
-              callButton.disabled = false;
-              statusDiv.innerHTML = 'Connected: Ready to call';
-            })
-            .catch((err) => {
-              console.error(err);
-              statusDiv.innerHTML('Unable to connect');
-            });
-        }
-      })
-        .catch((e) => {
-          // Do something with the auth error here
-          console.error(e);
-          statusDiv.innerHTML = 'Unable to Login.';
-        });
-    });
 
-  // Call Button Click
-  callButton.addEventListener('click', (event) => {
-    // we don't want to reload when we try to dial
-    event.preventDefault();
+  // Set our status
+  statusDiv.innerHTML = 'Loading';
+
+  // Register our browser with Webex Teams calling
+  function registerWithWebexTeamsCalling() {
+    spark.phone.register()
+      .then(() => {
+        // Enable our call button
+        callButton.disabled = false;
+        statusDiv.innerHTML = 'Connected: Ready to call';
+      })
+      .catch((err) => {
+        console.error(err);
+        statusDiv.innerHTML('Unable to connect');
+      });
+  }
+
+
+  // Places a call to the given destination
+  function placeCall(destination) {
     callButton.disabled = true;
-    const call = spark.phone.dial('roomkit@sparkdemos.com');
+    const call = spark.phone.dial(destination);
     statusDiv.innerHTML = 'Calling!';
-    
+
     call.on('error', (err) => {
       console.error(err);
       alert(err.stack);
     });
-  
+
     // Add the self view
     call.once('localMediaStream:change', () => {
       document.getElementById('self-view').srcObject = call.localMediaStream;
@@ -127,11 +110,31 @@
     hangupButton.addEventListener('click', () => {
       call.hangup();
     });
+  }
+
+  spark.once('ready', () => {
+    statusDiv.innerHTML = 'Authorizing';
+    spark.authorization.requestAccessTokenFromJwt({jwt}).then(() => {
+        if (spark.canAuthorize) {
+          // Authorization is successful
+          // Change Authentication status to `Authorized`
+          statusDiv.innerHTML = 'Authorized!';
+
+          registerWithWebexTeamsCalling();
+        }
+      })
+        .catch((e) => {
+          // Do something with the auth error here
+          console.error(e);
+          statusDiv.innerHTML = 'Unable to Login.';
+        });
+    });
+
+  // Call Button Click
+  callButton.addEventListener('click', (event) => {
+    // we don't want to reload when we try to dial
+    event.preventDefault();
+
+    placeCall('roomkit@sparkdemos.com');
   });
-
-  <!-- Single Party Call JS END -->
 </script>
-  </div>
-</body>
-
-</html>
