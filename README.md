@@ -49,6 +49,9 @@ First, let's make sure our environment is setup properly and able to create gues
   * Add "/guest" to the url in the new tab that just opened.
     * Example: <https://sdkguestserver.adamweeks.repl.co/guest>
   * Copy generated token and paste it into <https://www.jwt.io>
+  * The "payload" section should have two things:
+    * `"name": "SDK Workshop"`
+    * `"iss":` your guest issuer ID
 
 ### App Work Stage 2 (display name entry)
 
@@ -63,6 +66,9 @@ In this step, We will use an input form and generate a guest token from it.
   * Stage 2 has two states: entry form and user display
   * Test out the form and user entry on your site by browsing to `/stage2`
   * Verify JWT has entered user name via <https://www.jwt.io>
+  * The "payload" section should have two things:
+    * `"name":` name you just entered
+    * `"iss":` your guest issuer ID
 
 ### App Work Stage 3 (widget calling)
 
