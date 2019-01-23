@@ -1,30 +1,30 @@
-<div>
-  <h2>Authenticating with guest token</h2>
-  <div id="status">Loading...</div>
-</div>
-<script>
-  // Initialize the SDK
-  const spark = ciscospark.init();
+  <div>
+    <h2>Authenticating with guest token</h2>
+    <div id="status">Loading...</div>
+  </div>
+  <script>
+    // Initialize the SDK
+    const spark = ciscospark.init();
 
-  // The JWT is passed from express and stored in a variable
-  const jwt = '<%=locals.token%>';
+    // The JWT is passed from express and stored in a variable
+    const jwt = '<%=locals.token%>';
 
-  spark.once('ready', () => {
-    // Set the text on the page to let the user know we are attempting to authorize
-    document.getElementById('status').innerHTML = 'Authorizing';
+    spark.once('ready', () => {
+      // Set the text on the page to let the user know we are attempting to authorize
+      document.getElementById('status').innerHTML = 'Authorizing';
 
-    // Using the guest token, get an access token from the Webex Teams server
-    spark.authorization.requestAccessTokenFromJwt({jwt}).then(() => {
-        if (spark.canAuthorize) {
-          // Authorization is successful
-          // TODO: Change Authentication status to `Authorized`
-
-        }
-      })
-        .catch((e) => {
-          // Do something with the auth error here
-          console.error(e);
-          document.getElementById('status').innerHTML = 'Unable to Login.';
-        });
-    });
-</script>
+      // Using the guest token, get an access token from the Webex Teams server
+      spark.authorization.requestAccessTokenFromJwt({jwt}).then(() => {
+          if (spark.canAuthorize) {
+            // Authorization is successful
+            // Change Authentication status to `Authorized`
+            document.getElementById('status').innerHTML = 'User Authorized.';
+          }
+        })
+          .catch((e) => {
+            // Do something with the auth error here
+            console.error(e);
+            document.getElementById('status').innerHTML = 'Unable to Login.';
+          });
+      });
+  </script>

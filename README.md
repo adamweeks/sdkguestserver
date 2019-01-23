@@ -48,7 +48,7 @@ First, let's make sure our environment is setup properly and able to create gues
 * Verify that the `/guest` endpoint works
   * Add "/guest" to the url in the new tab that just opened.
     * Example: <https://sdkguestserver.adamweeks.repl.co/guest>
-  * Copy generated token and paste it into <https://www.jwt.io>
+  * Copy generated token and paste it into <https://jwt.io>
   * The "payload" section should have two things:
     * `"name": "SDK Workshop"`
     * `"iss":` your guest issuer ID
@@ -65,7 +65,7 @@ In this step, We will use an input form and generate a guest token from it.
     ```
   * Stage 2 has two states: entry form and user display
   * Test out the form and user entry on your site by browsing to `/stage2`
-  * Verify JWT has entered user name via <https://www.jwt.io>
+  * Verify JWT has entered user name via <https://jwt.io>
   * The "payload" section should have two things:
     * `"name":` name you just entered
     * `"iss":` your guest issuer ID
@@ -74,15 +74,7 @@ In this step, We will use an input form and generate a guest token from it.
 
 Now that we are creating a guest token, let's use the widgets to place our first call!
 
-* Open the `widget.js` file
-* Our developer has left us with a `TODO:` comment in the code!
-* Find the code block that starts with: `ciscospark.widget(widgetEl).spaceWidget({`
-* Add the following property:
-
-  ```js
-  destinationId: 'roomkit@sparkdemos.com',
-  ```
-
+* Open the `views/widget.ejs` file
 * Browse to page `/stage3` and verify widget opens.
 * Try changing widget configurations
   * [View other widget configuration options here](https://github.com/webex/react-ciscospark/blob/master/packages/node_modules/@ciscospark/widget-space/README.md#configuration)
@@ -101,13 +93,6 @@ Let's convert our front end code to use the SDK. The first thing we need to do i
 * Open `stage4.ejs` file
 * Find the `spark.authorization.requestAccessTokenFromJwt` line of code
   * This is where we login to Webex Teams with the guest token
-
-This stage does not give our user any information as to what is going on. Let's add a status message to display the status of our application:
-
-* Our developer has left us with ANOTHER `TODO:` comment in the code!
-* Add a line of javascript to indicate that the user can authorize
-  * Hint 1: look for the `if (spark.canAuthorize) {` code
-  * Hint 2: Change the website text by setting this `document.getElementById('status').innerHTML`.
 
 ### App Work Stage 5 (Using SDK)
 
