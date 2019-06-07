@@ -93,6 +93,9 @@ Let's convert our front end code to use the SDK. The first thing we need to do i
 * Open `stage4.ejs` file
 * Find the `spark.authorization.requestAccessTokenFromJwt` line of code
   * This is where we login to Webex Teams with the guest token
+* Browse to page `/stage4`
+  * Enter your name
+  * Verify that the `Authorizing` state changes to `User Authorized.`
 
 ### App Work Stage 5 (Using SDK)
 
