@@ -13,7 +13,7 @@
     "ciscospark": "1.32.23",
     "dotenv": "^6.2.0",
     "ejs": "2.6.1",
-    "express": "4.16.4",
+    "express": "4.17.3",
     "jsonwebtoken": "8.4.0",
     "uuid": "3.3.2"
   }
